@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Admin Dashboard for managing quotes, contact requests, and email subscriptions">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4 text-center">Admin Dashboard</h1>
+        <div class="row">
+            <!-- Card for GetQuote -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Get Quotes
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ get_quotes.count }} Quotes</h5>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#getQuotesModal">View Details</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card for Contact Requests -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Contact Requests
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ contact_requests.count }} Requests</h5>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactRequestsModal">View Details</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card for Stay Updated -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Stay Updated
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ stay_updated.count }} Emails</h5>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#stayUpdatedModal">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Get Quotes Modal -->
+    <div class="modal fade" id="getQuotesModal" tabindex="-1" aria-labelledby="getQuotesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="getQuotesModalLabel">Get Quotes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Email Address</th>
+                                <th>Service of Inquiry</th>
+                                <th>Further Information</th>
+                                <th>Date of Inquiry</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for quote in get_quotes %}
+                            <tr>
+                                <td>{{ quote.full_name }}</td>
+                                <td>{{ quote.email_address }}</td>
+                                <td>{{ quote.get_service_of_inquiry_display }}</td>
+                                <td>{{ quote.further_information }}</td>
+                                <td>{{ quote.date_of_inquiry }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Requests Modal -->
+    <div class="modal fade" id="contactRequestsModal" tabindex="-1" aria-labelledby="contactRequestsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="contactRequestsModalLabel">Contact Requests</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Message</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for request in contact_requests %}
+                            <tr>
+                                <td>{{ request.name }}</td>
+                                <td>{{ request.email }}</td>
+                                <td>{{ request.phone }}</td>
+                                <td>{{ request.message }}</td>
+                                <td>{{ request.date }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stay Updated Modal -->
+    <div class="modal fade" id="stayUpdatedModal" tabindex="-1" aria-labelledby="stayUpdatedModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="stayUpdatedModalLabel">Stay Updated Emails</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for email in stay_updated %}
+                            <tr>
+                                <td>{{ email.email }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
